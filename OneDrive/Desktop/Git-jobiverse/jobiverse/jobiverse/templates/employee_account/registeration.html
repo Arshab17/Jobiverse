@@ -1,0 +1,196 @@
+{% extends 'employee_account/base.html'%}
+{% block content %}
+        <form method = 'POST' enctype='multipart/form-data'>
+          {% for message in messages %}
+
+          {{message}}
+
+
+          {% endfor %}
+
+
+
+
+
+            {% csrf_token %}
+        <section class="vh-100" style="background-color: #2779e2;">
+            <div class="container h-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-9">
+          
+                  <h1 class="text-white mb-4 ">Register Your Account</h1>
+          
+                  <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+                                              {% comment %} <label>choice :</label>
+                            <select name="choice">
+                                <option values="is_employee">Employee</option>
+                                <option values="is_company">Company</option>
+                                <option values="is_admin">Admin</option>
+                                
+                            </select>  {% endcomment %}
+                            
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">First name</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'f_name' />
+          
+                        </div>
+                      </div>
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Last name</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'l_name' />
+          
+                        </div>
+                      </div>
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Date of birth</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="date" class="form-control form-control-lg" name = 'dob' />
+          
+                        </div>
+                      </div>
+                       
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Profile image</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="file" class="form-control form-control-lg" name='p_image' />
+          
+                        </div>
+                      </div>
+          
+                      <hr class="mx-n3">
+          
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Email address</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="email" class="form-control form-control-lg" placeholder="example@example.com" name='email' />
+          
+                        </div>
+                      </div>
+          
+
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Phone Number</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" placeholder="+919995965776" name='phone' />
+          
+                        </div>
+                      </div>
+
+                      <hr class="mx-n3">
+          
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Password</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="Password" class="form-control form-control-lg" placeholder="Abc1@23" name='password' />
+          
+                        </div>
+                      </div>
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Re-type Password</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="Password" class="form-control form-control-lg" placeholder="" name='password2' />
+          
+                        </div>
+                      </div>
+          
+                      <hr class="mx-n3">
+          
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Upload CV</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input class="form-control form-control-lg" id="formFileLg" type="file" name='resume' />
+                          <div class="small text-muted mt-2">Upload your CV/Resume or any other relevant file. Max file
+                            size 50 MB</div>
+          
+                        </div>
+                      </div>
+          
+                      <hr class="mx-n3">
+          
+                      <div class="px-5 py-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Send </button>
+                      </div>
+          
+                    </div>
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+         
+
+
+
+{% endblock content %}          
+
+{% comment %} <form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+    {{ form.as_p }}
+    <div class="row align-items-center py-3">
+      <div class="col-md-3 ps-5">
+
+        <h6 class="mb-0">Password</h6>
+
+      </div>
+      <div class="col-md-9 pe-5">
+
+        <input type="Password" class="form-control form-control-lg" placeholder="Abc1@23" name='password' />
+
+      </div>
+    </div>
+    <br>
+<button type="submit">register</button>
+</form>  {% endcomment %}

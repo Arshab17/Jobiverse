@@ -1,0 +1,38 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+
+{% if request.user %}
+<div class="container">
+    <table id="example" class="table table-hover  ">
+    <thead>
+        <tr style=" background-color:#3498DB" >
+            <th>s.no.</th>
+            <th>company name</th>
+            <th>company email</th>
+            <th>logo</th>
+            <th>website</th>
+            <th>status</th>
+            <th>Action</th>
+
+
+        </tr>
+        </thead>    
+        
+        <tbody>
+            {% for i in recruiters%}
+            <tr style="background-color:#D6DBDF">
+                <td>{{forloop.counter}}</td>
+                <td>{{i.company_name}}</td>
+                <td>{{i.email}}</td>
+                <td><img src="{{i.logo}}"></td>
+                <td>{{i.website}}</td>
+                <td>{{i.status}}</td>
+                <td><a class="btn btn-warning btn-sm" href="{% url 'delete_recruiter' i.id %}" onclick="return confirm('Are you sure?')">Delete</a></td>
+
+            </tr>
+            {%endfor%} 
+    </table>
+</div>
+
+{% endif %}
+{%endblock%}

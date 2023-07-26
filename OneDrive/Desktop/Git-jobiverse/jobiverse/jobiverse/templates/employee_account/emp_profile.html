@@ -1,0 +1,369 @@
+{% extends 'employee_account/base.html' %}
+
+{% block content %}
+
+<section class="h-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card">
+          <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+            <div class="ms-4 mt-auto d-flex flex-column" style="width: 150px;">
+              <img src="{{employee.profile_img.url}}" alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+              {%if request.user.employee%}
+              <a href="{% url 'emp_edit' %}" type="button" class="btn btn-primary" data-mdb-ripple-color="dark" style="z-index: 1;">
+                Edit 
+              </a>
+              {% endif %}
+
+              {% if request.user.company %}
+              <a class="btn" href="{% url 'applicant_status' job_application.id %}">status</a>
+              {% endif %}
+            </div>
+            <div class="ms-3" style="margin-top: 130px;">
+              <h5 class="text-light">{{employee.user.first_name}} {{employee.user.last_name}}</h5>
+              <p>{{employee.email}}</p>
+            </div>
+          </div>
+          <div class="p-4 text-black" style="background-color: #f8f9fa;">
+            <div class="d-flex justify-content-end text-center py-1">
+              <div>
+                {% comment %} <a class="btn btn-outline-primary" href="{% url 'view_resume' profile.id %}" target="_blank">View Resume</a> {% endcomment %}
+              </div>
+              <div class="px-3">
+                <p class="mb-1 h5">1026</p>
+                <p class="small text-muted mb-0">Followers</p>
+              </div>
+              <div>
+                <p class="mb-1 h5">478</p>
+                <p class="small text-muted mb-0">Following</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4 text-black">
+            <div class="mb-5">
+              <p class="lead fw-normal mb-1">About</p>
+              <div class="p-4" style="background-color: #f8f9fa;">
+                <p class="font-italic mb-1">{{profile.about}}</p>
+                <p class="font-italic mb-1"></p>
+                <p class="font-italic mb-0"></p>
+              </div>
+            </div>
+            <section class="experience section-padding">
+              <div class="container">
+                <h3 class="experience-title">Experience</h3>
+
+                <div class="company-wrapper clearfix">
+                  {% for experience in profile.experience_set.all %}
+                  <div class="experience-title">
+                    <h5>{{ experience.position }}</h5>
+                  </div> <!-- NAME OF THE COMPANY YOU WORKED WITH  -->
+                  <div class="experience-company">{{ experience.company }}</div>
+                  <div class="time text-muted">{{ experience.year_started }} - {{ experience.year_ended }}</div> <!-- THE TIME YOU WORKED WITH THE COMPANY  -->
+                  <div class="experience-location">{{ experience.location }}</div>
+                  <div class="experience-description">{{ experience.description }}</div>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editExperienceModal{{ experience.id }}">
+                    Edit
+                </button>
+                 <br><br>
+                {% endfor %}
+              
+
+                <!-- Button to trigger the modal -->
+                {%if request.user.employee%}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExperienceModal">
+                  Add Experience
+                </button> <br><br>
+                {% endif %}
+
+              <!-- Modal for adding experience -->
+              <div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addExperienceModalLabel">Add Experience</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form method="post" action="{% url 'add_experience' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                          <label for="company" class="form-label">Company</label>
+                          <input type="text" class="form-control" id="company" name="company">
+                        </div>
+                        <div class="mb-3">
+                          <label for="position" class="form-label">Position</label>
+                          <input type="text" class="form-control" id="position" name="position">
+                        </div>
+                        <div class="mb-3">
+                          <label for="yearStarted" class="form-label">Year Started</label>
+                          <input type="date" class="form-control" id="yearStarted" name="year_started">
+                        </div>
+                        <div class="mb-3">
+                          <label for="yearEnded" class="form-label">Year Ended</label>
+                          <input type="date" class="form-control" id="yearEnded" name="year_ended">
+                        </div>
+                        <div class="mb-3">
+                          <label for="location" class="form-label">Location</label>
+                          <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        <div class="mb-3">
+                          <label for="description" class="form-label">Description</label>
+                          <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save Experience</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--ended adding experience-->
+
+
+            <!--Edit experience-->
+                          
+                {% for experience in profile.experience_set.all %}
+                <!-- Edit experience modal -->
+                <div class="modal fade" id="editExperienceModal{{ experience.id }}" tabindex="-1" aria-labelledby="editExperienceModalLabel{{ experience.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editExperienceModalLabel{{ experience.id }}">Edit Experience</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" action="{% url 'experience_edit' experience.id %}">
+                                    {% csrf_token %}
+                                    
+                                    <div class="mb-3">
+                                        <label for="company{{ experience.id }}" class="form-label">Company</label>
+                                        <input type="text" class="form-control" id="company{{ experience.id }}" name="company" value="{{ experience.company }}">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="position" class="form-label">Position</label>
+                                      <input type="text" class="form-control" id="position" name="position" value="{{ experience.position }}">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="yearStarted" class="form-label">Year Started</label>
+                                      <input type="date" class="form-control" id="yearStarted" name="year_started" value="{{ experience.year_started }}">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="yearEnded" class="form-label">Year Ended</label>
+                                      <input type="date" class="form-control" id="yearEnded" name="year_ended" value="{{ experience.year_ended }}">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="location" class="form-label">Location</label>
+                                      <input type="text" class="form-control" id="location" name="location" value="{{ experience.location }}">
+                                    </div>
+                                    <div class="mb-3">
+                                      <label for="description" class="form-label">Description</label>
+                                      <textarea class="form-control" id="description" name="description" value="{{ experience.description }}"></textarea>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save Experience</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!-- End edit experience modal -->
+
+<!-- Experience details display -->
+{% comment %} <div class="experience-details">
+    <!-- Display experience details -->
+    <h4>{{ experience.company }}</h4>
+    <!-- Other details -->
+
+    <!-- Edit button to trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editExperienceModal{{ experience.id }}">
+        Edit
+    </button>
+</div> {% endcomment %}
+{% endfor %}
+
+            <!--End edit experience-->              
+
+
+
+            
+              <!--Education -->
+              <h3 class="education-title">Education</h3>
+
+              <div class="education-wrapper clearfix">
+                {% for education in profile.education_set.all %}
+                <div class="education-title">
+                  <h5>{{ education.course }}</h5>
+                </div> <!-- NAME OF THE COMPANY YOU WORKED WITH  -->
+                <div class="education-university">{{ education.university_college }}</div>
+                <div class="time text-muted">{{ education.year_started }} - {{ education.year_ended }}</div> <!-- THE TIME YOU WORKED WITH THE COMPANY  -->
+
+               <br><br>
+              {% endfor %}
+            
+
+            <!-- Button to trigger the modal -->
+            {%if request.user.employee%}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEducationModal">
+              Add Education
+            </button> <br> <br>
+            {% endif %}
+            <!-- Modal for adding experience -->
+            <div class="modal fade" id="addEducationModal" tabindex="-1" aria-labelledby="addEducationModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addEducationModalLabel">Add Education</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="post" action="{% url 'add_education' %}">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="course" class="form-label">Course</label>
+                        <input type="text" class="form-control" id="course" name="course">
+                      </div>
+                      <div class="mb-3">
+                        <label for="university" class="form-label">University Or College</label>
+                        <input type="text" class="form-control" id="university" name="university">
+                      </div>
+                      <div class="mb-3">
+                        <label for="year_started" class="form-label">Year Started</label>
+                        <input type="date" class="form-control" id="year_started" name="year_started">
+                      </div>
+                      <div class="mb-3">
+                        <label for="year_ended" class="form-label">Year Ended</label>
+                        <input type="date" class="form-control" id="year_ended" name="year_ended">
+                      </div>
+                      
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Education</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <!--Education ended-->
+
+              <div class="section-wrapper clearfix">
+                <h3 class="section-title">Skills</h3> <!-- YOUR SET OF SKILLS  -->
+                <ul>
+                  {% for skill in profile.skillset_set.all %}
+                  <li class="skill-percentage">{{ skill.skill }}</li>
+                  {% endfor %}
+                </ul>
+                {%if request.user.employee%}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSkillModal">
+                      Add Skill
+                    </button> <br><br>
+                    {% endif %}
+              </div>
+
+              <div class="modal fade" id="addSkillModal" tabindex="-1" aria-labelledby="addSkillModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addSkillModalLabel">Add Skill</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form method="post" action="{% url 'add_skill' %}">
+                      {% csrf_token %}
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="skillName" class="form-label">Skill Name</label>
+                          
+                          <input type="text" class="form-control" id="skillName" name="skillName">
+                          
+                        </div>
+                        <!-- Add more fields for additional skill details if needed -->
+                        
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Skill</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <!--- Add project -->
+              <div class="section-wrapper clearfix">
+                <h3 class="section-title">Project</h3>
+                <ul>
+                  {% for project in profile.project_set.all %}
+                  <div class="project">{{ project.project_name }}</div>
+                  <a class="btn btn-info" href="{{ project.project_file.url }}" target="_blank">Download File</a>
+                  <div class="project">{{ project.description }}</div>
+                  {% endfor %}
+                </ul>
+                {%if request.user.employee%}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">
+                      Add Project
+                    </button> <br><br>
+                    {% endif %}
+              </div>
+
+              <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addProjectModalLabel">Add Project</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form method="post" action="{% url 'add_project' %}"  enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <label for="project_name" class="form-label">Project</label>
+                          <input type="text" class="form-control" id="project_name" name="project_name">
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="project_file" class="form-label">Project file</label>
+                          <input type="file" class="form-control" id="project_file" name="project_file">
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="description" class="form-label">Project Description</label>
+                          <input type="text" class="form-control" id="description" name="description">
+                        </div>
+                        <!-- Add more fields for additional projects details if needed -->
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Project</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!--end project-->
+
+
+
+              <div class="section-wrapper clearfix">
+                <h3 class="section-title">Hobbies</h3> <!-- DESCRIPTION OF YOUR HOBBIES -->
+                <p>{{ profile.hobbies }}.</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a elit facilisis, adipiscing leo in, dignissim magna.</p>
+              </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

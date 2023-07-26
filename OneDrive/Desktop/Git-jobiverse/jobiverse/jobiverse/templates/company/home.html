@@ -1,0 +1,202 @@
+{% extends 'company/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="container-fluid " >
+    <div class="row">
+        <div class="col-md-2 col-12 p-0 border rounded" style="background-color:#0094a1;">
+            
+            <ul ><br>
+           
+            <li><a class="text-decoration-none  text-light lead m-auto" href="{% url 'applicants_list'  %}">Applicants<span class="material-symbols-outlined">
+                group
+                </span> </a></li><hr>
+            
+            <li><a class="text-decoration-none text-light m-auto lead" href="{% url 'edit_post'  %}">Edit Post <span class="material-symbols-outlined">
+                edit
+                </span></a></li><hr>
+
+            <li><a class="text-decoration-none text-light m-auto lead" href="{% url 'posted_jobs_c' %}">Posted jobs <span class="material-symbols-outlined">
+                badge
+                </span></a></li><hr>
+
+            <li><a class="text-decoration-none text-light m-auto lead" href="{% url 'job-post' %}">Add job <span class="material-symbols-outlined">
+                library_add
+                </span></a></li><hr>
+
+            <li><a class="text-decoration-none text-light m-auto lead" href=""><span class="material-symbols-outlined">
+                settings
+                </span></a></li><hr>
+       
+        </ul>
+            
+        </div>
+        
+        <div class="col-md-10 col-12 p-0 m-auto bg-seccondary" >
+            
+            <div class="row text-light">
+            
+
+                <div class="col-md-2 col-12 m-auto p-2 border rounded d-flex align-items-end shadow-lg " style="background-color:#00CED1; height:20vh;">
+                        <div class="m-auto d-flex align-items-start p-0">
+                            <h3>2</h3>
+                            <h6>No.of Users</h6>
+                        </div>
+                        <div class="d-flex align-items-end justify-content-center  text-light m-auto p-1  border rounded-pill w-50" style="background-color:#00CED1; font-weight:bold;font-size:10px;">
+                        <a href="" >more info </a></div>
+                </div>
+                
+                <div class="col-md-2 col-12 d-flex align-items-end  m-auto p-2 border rounded shadow-lg " style="background-color:#00FA9A; height:20vh;">
+                    <div class=" mb-5 d-flex align-items-start p-0">
+                        <h3>{{counts}}</h3>
+                        <h6>Applicants</h6>
+                    </div>
+                    <div class=" d-flex align-items-end justify-content-center  text-light m-auto p-1  border rounded-pill w-50" style="background-color:#00FA9A; font-weight:bold;font-size:10px;">
+                        <a href="{% url 'applicants_list'  %}" >more info</a> </div>
+                </div>
+                <div class="col-md-2 col-12 d-flex align-items-end m-auto p-2 border rounded shadow-lg " style="background-color:orange; height:20vh;">
+                    <div class=" m-auto d-flex align-items-start p-0">
+                        <h3>{{job_count}}</h3>
+                        <h6>No.of jobs</h6>
+                    </div>
+                    <div class=" d-flex align-items-end justify-content-center text-light m-auto p-1  border rounded-pill w-50" style="background-color:darkblue; font-weight:bold;font-size:10px;">
+                        <a href="{% url 'posted_jobs_c'  %}" >more info</a> </div>
+                </div>               
+                <div class="col-md-2 col-12 d-flex align-items-end m-auto p-2 border rounded shadow-lg " style="background-color:#FF6347; height:20vh;">
+                    <div class=" m-auto d-flex align-items-start p-0">
+                        <h3>{{live_jobs}}</h3>
+                        <h6>Live Jobs</h6>
+                    </div>
+                        <div class=" d-flex  justify-content-center text-light m-auto p-1  border rounded-pill w-50" style="background-color:#FF6347; font-weight:bold;font-size:10px;">
+                          <a href="{% url 'live_jobs' %}">more info </a></div>
+                                 
+                </div><br><br>    
+
+        <div class="row d-flex justify-content-between">
+                <div class=" col-md-5 col-12 p-3 m-3 ">
+                    <div class='d-flex justify-content-between'>
+                        <span class="lead text-dark">Current Openings</span> 
+                        <a href="{% url 'posted_jobs_c' %}" class="btn border rounded-pill bg-dark  p-3">see more</a>
+                    </div>
+                    <table id="example" class="table table-hover  ">
+                        
+                    <thead>
+                        
+                        <tr class="text-light" style=" background-color:black;" >
+                            <th>S.no.</th>
+                            <th>Desgnation</th>
+                            <th>Applicants</th>
+                            <th>Details</th>
+                            
+                            
+                
+                        </tr>
+                        </thead>    
+                        
+                        <tbody>
+                            {% for i in jobs %}
+                        
+                            <tr style="background-color:#D6DBDF">
+                                <td>{{forloop.counter}}</td>
+                                <td> <a class="text-dark" href="{% url 'job_posted_details' i.id %}">{{i.designation}} </a></td>
+                                <td></td>
+                                <td><a class="btn-outline-success btn-sm border rounded-pill" href="{% url 'job_posted_details' i.id %}">view </a>
+                                {% comment %} <td><a class="btn btn-warning btn-sm" href="{% url 'delete_job' i.id %}" onclick="return confirm('Are you sure?')">Delete</a></td> {% endcomment %}
+                
+                            </tr>
+                    
+                            {%endfor%} 
+                    </table>
+            </div> 
+
+
+
+            <div class="col-md-5 col-12 p-3 m-3"><div class='d-flex justify-content-between'>
+                <span class="lead text-dark">Applied Candidates</span> 
+                <a href="{% url 'applicants_list'  %}" class="btn border rounded-pill bg-dark  p-3">see more</a>
+            </div>
+               
+                    
+                        <table id="example" class="table table-hover">
+                            
+                            <thead>
+                                <tr style="background-color:black" class="text-light">
+                                    <th>S.no.</th>
+                                    <th>Employee</th>
+                                    <th>Desgnation</th>
+                                    {% comment %} <th>Date</th>
+                                    <th>Email</th> {% endcomment %}
+                                    <th>Status</th>
+                                    {% comment %} <th>Resume</th> {% endcomment %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for job_applied in applicants %}
+                                    {% if request.user.id == job_applied.job_vacancy.company.user.id %}
+                                        {% if forloop.counter <= 5 %}
+                                                <tr style="background-color:#D6DBDF">
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ job_applied.employee.user.first_name }} {{ job_applied.employee.user.last_name }}</td>
+                                                    <td>{{ job_applied.job_vacancy }}</td>
+                                                    
+                                                    {% comment %} <td>{{ job_applied.employee.user.email }}</td> {% endcomment %}
+                                                    <td><a class="btn-sm  btn-outline-primary border rounded-pill" href="{% url 'applicant_status' job_applied.id %}">{{ job_applied.status }}</a></td>
+                                                    {% comment %} <td><a class="btn btn-primary" href="{{ job_applied.resume.url }}">Resume</a></td> {% endcomment %}
+                                                </tr>
+                                            {% endif %}
+                                        {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    
+                    
+            </div>
+
+        </div>
+        <div class="container col-md-10 col-12">
+            
+            {% for vacancy in jobs %}
+                {% if vacancy.go_live == True %}
+                    <div class="single-job-items mb-30 " style=" background-color:#D6DBDF">
+                        <div class="job-items">
+                            <div class="company-img">
+                                <a href="job_details.html"><img src="{{vacancy.company.logo.url}}" alt="Generic placeholder image" style="width: 60px; z-index: 1"></a>
+                            </div>
+                            <div class="job-tittle text-dark ">
+                                <a href="{% url 'job_posted_details' vacancy.id %}"><h4>{{ vacancy.designation }}</h4></a>
+                                <div class="col-md-12 col-12 d-flex justify-content-between">
+                                    <div class="col-md-6 col-12">
+                                        <ul>
+                                            <li>{{ vacancy.company.company_name}}</li>
+                                            <li><i class="fas fa-map-marker-alt"></i>{{ vacancy.location}}</li>
+                                            {% comment %} <li>{{ vacancy.description|linebreaks}}</li> {% endcomment %}
+                                            
+                                        </ul>
+                                    </div>
+                                   
+                                    <div class="col-md-2 col-12 ">{{vacancy.job_type}}</div>
+                                    <div class="col-md-2 col-12">{{vacancy.posted}}</div>
+                                    <div class="col-md-2 col-12 ">{{vacancy.salary_from}}-{{vacancy.salary_to}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {%endfor%}
+            
+            </div>
+        </div>
+        
+    <div class=" d-flex justify-content-end">Page:
+        {% for i in pages %}
+        <a class="btn btn-sm btn-outline-info m-1" href="?page={{i}}">{{i}}</a>
+        {%endfor%}
+    </div> 
+        {% include 'admin/footer.html' %}
+{% comment %}    
+        <div class="col-md-6 col-12 bg-primary w-50 h-50 p-0 m-0">jdgaoug</div> {% endcomment %}
+    </div>
+</div>
+
+{% endblock %}

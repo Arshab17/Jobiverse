@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OTP</title>
+</head>
+<body>
+<h4> Enter your one time password </h4>
+<form method="POST">
+  {% csrf_token %}
+
+    <input type="text" name="otp">
+    <input type="submit" value="submit">
+</form>
+
+
+<p style="color:green" id="timer"></p>
+
+<script>
+  var count = 60;
+
+  var timer = setInterval(function() {
+    count--;
+    if (count <= 0) {
+      clearInterval(timer);
+      alert("Time's up!");
+    } else {
+      document.getElementById("timer").innerHTML = count + " seconds remaining";
+    }
+  }, 1000);
+</script>
+</body>

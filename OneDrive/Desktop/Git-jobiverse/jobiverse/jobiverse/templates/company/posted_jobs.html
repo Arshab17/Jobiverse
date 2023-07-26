@@ -1,0 +1,43 @@
+{% extends 'company/base.html' %}
+
+{% block content %}
+<div class="container">
+    <table id="example" class="table table-hover  ">
+    <thead>
+        <tr class="text-light" style=" background-color:black;" >
+            <th>S.no.</th>
+            <th>Company name</th>
+            <th>Desgnation</th>
+            <th>Applicants</th>
+            <th>Location</th>
+            <th>Date </th>
+            <th>details</th>
+            <th>Action</th>
+            
+
+        </tr>
+        </thead>    
+        
+        <tbody>
+            {% for i in jobs %}
+           
+            <tr style="background-color:#D6DBDF">
+                <td>{{forloop.counter}}</td>
+                <td>{{i.company}}</td>
+                <td> <a class="text-dark" href="{% url 'job_posted_details' i.id %}">{{i.designation}} </a></td>
+                <td>{{i.applicant_count}}</td>
+                <td>{{i.location}}</td>
+                <td>{{i.posted}}</td>
+                <td><a class=" btn-sm btn-outline-success border rounded" href="{% url 'job_posted_details' i.id %}">view </a>
+
+                <td><a class=" btn-warning btn-sm border rounded" href="{% url 'delete_job' i.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+                    <a class=" btn-info btn-sm border rounded" href="{% url 'publish_or_unpublish' i.id %}">{% if i.go_live == True %}Unpublish{% else %}publish{% endif %}</a>
+                </td>
+
+            </tr>
+       
+            {%endfor%} 
+    </table>
+</div>
+{% include 'admin/footer.html' %}
+{% endblock %}

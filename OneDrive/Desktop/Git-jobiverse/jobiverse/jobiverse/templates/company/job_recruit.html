@@ -1,0 +1,270 @@
+{% extends 'company/base.html'%}
+{% block content %}
+{% for message in messages %}
+
+{{message}}
+
+
+{% endfor %}
+        <form method = 'POST'>
+            {% csrf_token %}
+        <section class="vh-100" style="background-color: #2779e2;">
+            <div class="container h-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-9">
+          
+                  <h1 class="text-white mb-4">Post A Job</h1>
+          
+                  <div class="card" style="border-radius: 15px;">
+                    <div class="card-body">
+
+                            
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Designation</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'designation'/>
+          
+                        </div>
+                      </div>
+                      
+                      
+                       
+                     
+          
+                      <hr class="mx-n3">
+          
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Description</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <textarea type="text" rows="5" cols="10" class="form-control form-control-lg" placeholder="job description" name='description' ></textarea><br><br>
+                          {% comment %} <input type="text" name='description'><br><br>
+                          <input type='text' name='description'><br><br>
+                          <input type='text' name='description'><br><br>
+                          <input type='text' name='description'><br><br>
+                          <input type='text' name='description'><br><br> {% endcomment %}
+
+          
+                        </div>
+                      </div>
+
+
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+        
+                          <h6 class="mb-0">Skills</h6>
+        
+                        </div>
+                        <div class="col-md-9 pe-5">
+        
+                          <div id="skills-container">
+                            <!-- Skills fields will be added dynamically here -->
+                          </div>
+                          <button type="button" class="btn btn-primary" onclick="addSkillField()">Add Skill</button>
+        
+                        </div>
+                      </div>
+        
+          
+
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">location</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" placeholder="united states" name='location' />
+          
+                        </div>
+                      </div>
+
+
+
+                      <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Job Type</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+                          
+                          <label class="container">Full Time
+                              <input type="checkbox" name="job_type" value="fulltime">
+                              <span class="checkmark"></span>
+                          </label>
+                          <label class="container">Part Time
+                              <input type="checkbox" name="job_type" value="parttime" checked="checked active">
+                              <span class="checkmark"></span>
+                          </label>
+                          <label class="container">Remote
+                              <input type="checkbox" name="job_type" value="remote">
+                              <span class="checkmark"></span>
+                          </label>
+                          <label class="container">Freelance
+                              <input type="checkbox" name="job_type" value="freelance">
+                              <span class="checkmark"></span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">vacancy</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'vacancy'/>
+          
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">salary-from</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'salary_from'/>
+          
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">salary-to</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'salary_to'/>
+          
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Experience-from</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'experience_from'/>
+          
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">Experience-to</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'experience_to'/>
+          
+                        </div>
+                      </div>
+
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">state</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'state'/>
+          
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">country</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'country'/>
+          
+                        </div>
+                      </div>
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">District</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <input type="text" class="form-control form-control-lg" name = 'district'/>
+          
+                        </div>
+                      </div>
+
+
+                      <div class="row align-items-center pt-4 pb-3">
+                        <div class="col-md-3 ps-5">
+          
+                          <h6 class="mb-0">status</h6>
+          
+                        </div>
+                        <div class="col-md-9 pe-5">
+          
+                          <select name="go_live"> 
+                          <option value="True" name="publish"> publish</option>
+                          <option value="False" name="unpublish"> unpublish</option>
+                      
+                        </select> <br>
+                                
+                        </div>
+                      </div>
+
+
+                      <hr class="mx-n3">
+          
+                      <div class="px-5 py-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Send </button>
+                      </div>
+          
+                    </div>
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+        <script>
+          function addSkillField() {
+            var container = document.getElementById("skills-container");
+            var input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control form-control-lg";
+            input.name = "skills[]"; // Use array notation to capture multiple skills
+            container.appendChild(input);
+          }
+        </script>
+{% endblock content %} 

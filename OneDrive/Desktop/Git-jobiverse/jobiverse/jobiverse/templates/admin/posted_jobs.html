@@ -1,0 +1,41 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+
+{% if request.user.is_staff %}
+<div class="container">
+    <table id="example" class="table table-hover  ">
+    <thead>
+        <tr style=" background-color:#3498DB" >
+            <th>S.no.</th>
+            <th>Company name</th>
+            <th>Desgnation</th>
+            <th>Logo</th>
+            <th>Location</th>
+            <th>Date </th>
+            <th>Action</th>
+
+
+        </tr>
+        </thead>    
+        
+        <tbody>
+            {% for i in jobs %}
+            <tr style="background-color:#D6DBDF">
+                <td>{{forloop.counter}}</td>
+                <td>{{i.company}}</td>
+                <td>{{i.designation}}</td>
+                <td><img src="{{i.logo}}"></td>
+                <td>{{i.location}}</td>
+                <td>{{i.posted}}</td>
+                <td><a class="btn btn-warning btn-sm" href="{% url 'delete_job' i.id %}" onclick="return confirm('Are you sure?')">Delete</a></td>
+
+            </tr>
+            {%endfor%} 
+    </table>
+    
+</div>
+
+{% endif %}
+
+
+{%endblock%}

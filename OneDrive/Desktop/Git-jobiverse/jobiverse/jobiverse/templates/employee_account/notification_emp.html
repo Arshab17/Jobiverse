@@ -1,0 +1,15 @@
+{% extends 'employee_account/base.html'%}
+{% block content %}
+
+
+
+
+
+{% for notify in notifications %}
+<div class="d-flex justify-content-center bg-secondary text-light m-5">
+ 
+   <p class="text-light"> {{ notify }} </p><hr>
+</div>
+{% endfor %}
+
+{% endblock content %}

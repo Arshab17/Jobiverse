@@ -1,0 +1,37 @@
+
+<a href="{% url 'applicants_profile' applicant.id %}">
+    <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+       <img src="{{details.employee.profile_img.url }}"
+         alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+         style="width: 100px; height:100px; z-index: 1">
+    </div>
+    <p> {{details.employee.user.first_name}} {{details.employee.user.last_name}}</p></a>
+    <p> {{details.employee.email}}</P>
+    <p>{{details.message}}</p>
+    <p>Designation -{{details.job_vacancy}} ,{{details.job_vacancy.posted}}</p>
+       
+    <a href="{{details.employee.resume.url}}" class="btn btn-outline-primary">download resume</a>
+
+
+
+
+    
+
+def notification_details(request,id):
+details = Notification.objects.get(id=id)
+applicant = details.employee
+
+context={
+    'details':details,
+     'applicant':applicant
+}
+return redirect('applicants_profile', applicant.id)
+
+def applicant_details(request,id):
+employee = Employee.objects.get(id=id)
+profile = ProfileDetails.objects.filter(user=employee)
+context = {
+    'employee': employee,
+    'profile':profile
+}
+return render(request,'employee_account/emp_profile.html',context)

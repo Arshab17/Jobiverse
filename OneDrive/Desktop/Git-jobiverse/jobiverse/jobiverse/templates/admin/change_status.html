@@ -1,0 +1,27 @@
+{% extends 'admin/base.html'%}
+{% block content %}
+
+<form class="container mt-5" method="post">
+    {% csrf_token %}
+
+    <label><b>Recruiter Name</b></label>
+    <input type="text" class="form-control" name="username" value="{{recruiter.company_name}}">
+
+    <label>Status</label>
+    <select class="form-control" name="status">
+        <option value="Accept">Accept</option>
+        <option value="Reject">Reject</option>
+    </select>
+
+    <input type="submit" class="btn btn-primary m-2">
+
+</form>
+
+
+{% if recruiter.status in "Accept" %}
+<script>
+  alert('Request Accepted');
+</script>
+{% endif %}
+
+{% endblock %}

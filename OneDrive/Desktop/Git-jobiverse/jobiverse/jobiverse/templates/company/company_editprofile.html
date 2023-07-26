@@ -1,0 +1,43 @@
+{% extends 'company/base.html'%}
+
+
+
+
+
+{% block content %}
+{% for message in messages %}
+
+<span style="color:green"> {{message}}. </span><br>
+
+{%endfor%}<br>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="edit_image">Profile Image</label>
+          <input type="file" name="logo" class="form-control-file" >
+        </div>
+        <div class="form-group">
+          <label for="about">description</label>
+          <textarea name="decription" class="form-control"  rows="3">{{ company.decription }}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="experience">company name</label>
+          <input type="text" name="company_name" class="form-control"  value="{{ company.company_name }}">
+        </div>
+        <div class="form-group">
+          <label for="skills">Email</label>
+          <input type="text" name="email" class="form-control"   value="{{company.email}}">
+        </div>
+        <div class="form-group">Website</label>
+          <input type="text" name="website" class="form-control"  value="{{ company.website }}">
+        </div>
+      
+        <button type="submit" class="btn btn-primary btn-lg m-5 ">Save</button>
+      </form>
+      <div class="m-auto">
+        <a href="{% url 'reset_password' %}" class="btn m-1" > password reset</a>
+      </div>
+
+</div>
+  {% endblock %}

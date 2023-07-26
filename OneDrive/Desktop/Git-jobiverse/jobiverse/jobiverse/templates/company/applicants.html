@@ -1,0 +1,63 @@
+{% extends 'company/base.html' %}
+
+{% block content %}
+{% for message in messages %}
+<span style="color:green"> {{ message }}. </span><br>
+{% endfor %}<br>
+
+<h1>Applicants list</h1>
+<div class="container">
+    <table id="example" class="table table-hover">
+        <thead>
+            <tr style="background-color:black" class="text-light">
+                <th>S.no.</th>
+                <th>Employee Name</th>
+                <th>Desgnation</th>
+                <th>Date</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Resume</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job_applied in applicants %}
+                {% if request.user.id == job_applied.job_vacancy.company.user.id %}
+                    <tr style="background-color:#D6DBDF">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ job_applied.employee.user.first_name }} {{ job_applied.employee.user.last_name }}</td>
+                        <td>{{ job_applied.job_vacancy }}</td>
+                        <td></td>
+                        <td>{{ job_applied.employee.user.email }}</td>
+                        <td><a class=" btn-sm btn-info border-5 rounded" href="{% url 'applicant_status' job_applied.id %}">{{ job_applied.status }}</a></td>
+                        <td><a class="btn-sm btn-success" href="{{ job_applied.resume.url }}">Resume</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'admin/footer.html' %}
+</div>
+<br>
+<hr>
+
+
+
+
+{% if form.status == 'Shortlisted' %}
+    <script>
+        alert('Shortlisted');
+    </script>
+{% elif form.status == 'Reviewed' %}
+    <script>
+        alert('Reviewed');
+    </script>
+{% elif form.status == 'Rejected' %}
+    <script>
+        alert('Rejected');
+    </script>
+{% endif %}
+
+
+
+
+{% endblock %}

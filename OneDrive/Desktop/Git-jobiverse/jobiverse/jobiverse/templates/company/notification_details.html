@@ -1,0 +1,204 @@
+{% extends 'company/base.html' %}
+
+
+{% block content %}
+{% load static %}
+
+   
+    <main>
+
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>{{ details.job_vacancy.designation }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Hero Area End -->
+        <!-- job post company Start -->
+        <div class="job-post-company pt-120 pb-120">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <!-- Left Content -->
+                    <div class="col-xl-7 col-lg-8">
+                        <!-- job single -->
+                        <div class="single-job-items mb-50">
+                            <div class="job-items">
+                                <div class="company-img company-img-details">
+                                    <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="#">
+                                        <h4>{{ details.job_vacancy.designation }}</h4>
+                                    </a>
+                                    <ul>
+                                        <li>{{details.job_vacancy.company.company_name}}</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{details.job_vacancy.location}}</li>
+                                        <li>$3500 - $4000</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                          <!-- job single End -->
+                       
+                        <div class="job-post-details">
+                            <div class="post-details1 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>{{details.job_vacancy.description|linebreaks}}</h4>
+                                </div>
+                                <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                 <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Required Knowledge, Skills, and Abilities</h4>
+                                </div>
+                               <ul>
+                                   <li>System Software Development</li>
+                                   <li>Mobile Applicationin iOS/Android/Tizen or other platform</li>
+                                   <li>Research and code , libraries, APIs and frameworks</li>
+                                   <li>Strong knowledge on software development life cycle</li>
+                                   <li>Strong problem solving and debugging skills</li>
+                               </ul>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                 <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Education + Experience</h4>
+                                </div>
+                               <ul>
+                                   <li>3 or more years of professional design experience</li>
+                                   <li>Direct response email experience</li>
+                                   <li>Ecommerce website design experience</li>
+                                   <li>Familiarity with mobile and web apps preferred</li>
+                                   <li>Experience using Invision a plus</li>
+                               </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Right Content -->
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="post-details3  mb-50">
+                            <!-- Small Section Tittle -->
+                           <div class="small-section-tittle">
+                               <h4>Job Overview</h4>
+                           </div>
+                          <ul>
+                              <li>Posted date : <span>{{detials.job_vacancy.posted}}</span></li>
+                              <li>Location : <span>{{details.job_vacancy.location}}</span></li>
+                              <li>Vacancy : <span>02</span></li>
+                              <li>Job nature : <span>{{details.job_vacancy.job_type}}</span></li>
+                              <li>Salary :  <span>$7,800 yearly</span></li>
+                              <li>Application date : <span>12 Sep 2020</span></li>
+                          </ul>
+                         
+                       </div>
+                        <div class="post-details4  mb-50">
+                            <!-- Small Section Tittle -->
+                           <div class="small-section-tittle">
+                               <h4>Company Information</h4>
+                           </div>
+                              <span>Colorlib</span>
+                              <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                            <ul>
+                                <li>Name: <span>Colorlib </span></li>
+                                <li>Web : <span> colorlib.com</span></li>
+                                <li>Email: <span>carrier.colorlib@gmail.com</span></li>
+                            </ul>
+                       </div>
+                    </div>
+                                        
+                    
+                </div>
+            </div>
+        </div>
+        <!-- job post company End -->
+
+    </main>
+
+
+
+
+
+
+
+<a  href="{% url 'applicants_profile' applicant.id %}">
+ <div class="ms-4 mt-5 d-flex flex-column " style="width: 150px;">
+    <img src="{{details.employee.profile_img.url }}"
+      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+      style="width: 100px; height:100px; z-index: 1">
+ </div></a>
+ <p class="m-3"> {{details.employee.user.first_name}} {{details.employee.user.last_name}}</p>
+ <p class="m-3"> {{details.employee.email}}</P>
+ <p class="m-3">{{details.message}}</p>
+ <p class="m-3">Designation -{{details.job_vacancy}} ,{{details.job_vacancy.posted}}</p>
+  
+ <a href="{{details.employee.resume.url}}" class="btn btn-outline-primary m-3">download resume</a>
+
+
+
+
+ 
+<h1>Applicants list</h1>
+<div class="container">
+    <table id="example" class="table table-hover">
+        <thead>
+            <tr style="background-color:black" class="text-light">
+                <th>S.no.</th>
+                <th>Job Title</th>
+                <th>Desgnation</th>
+                <th>Date</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Resume</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in applicants %}
+                
+                    <tr style="background-color:#D6DBDF">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ job.job_vacancy.designation }} </td>
+                        <td>{{ job.job_vacancy.location }}</td>
+                        <td>{{job.applied}}</td>
+                        <td>{{ job.employee }}</td>
+                        <td><a class="btn btn-primary" href="{% url 'applicant_status' job.id %}">{{ job.status }}</a></td>
+                        <td><a class="btn btn-primary" href="{{ job_applied.resume.url }}">Resume</a></td> 
+                    </tr>
+               
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'admin/footer.html' %}
+</div>
+<br>
+<hr>
+
+
+
+
+{% if form.status == 'Shortlisted' %}
+    <script>
+        alert('Shortlisted');
+    </script>
+{% elif form.status == 'Reviewed' %}
+    <script>
+        alert('Reviewed');
+    </script>
+{% elif form.status == 'Rejected' %}
+    <script>
+        alert('Rejected');
+    </script>
+{% endif %}
+
+
+ {% endblock content %}

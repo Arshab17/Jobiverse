@@ -1,0 +1,45 @@
+{% extends 'employee_account/base.html' %}
+
+{% block content %}
+<h1>Job Application Detail</h1>
+
+<div class="container">
+    <table id="example" class="table table-hover  ">
+    <thead>
+        <tr style=" background-color:#3498DB" class="m-0 p-0" >
+            <th>Status</th>
+            <th>designation</th>
+            <th>company</th>
+            <th>Applied</th>
+            <th>Applicants</th>
+            
+
+
+        </tr>
+        </thead>    
+        
+        <tbody>
+            {% for job_applied in job_application %}
+            <tr style=" background-color:#3498DB" class="m-0 p-0"> 
+                <td>{{job_applied.status}}</td>    
+                <td>{{ job_applied.job_vacancy }}</td>
+                <td>{{ job_applied.job_vacancy.company.company_name}}</td>
+                <td>{{ job_applied.applied}}</td>
+                
+                <td>{{all_applicant}}</td>
+                
+
+            </tr>
+            {%endfor%} 
+        
+    </table>
+    {% include 'admin/footer.html' %}
+</div>
+
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+
+{% if request.user.is_staff %}
+<div class="container">
+    <table id="example" class="table table-hover  ">
+    <thead>
+        <tr style=" background-color:#3498DB" >
+            <th>s.no.</th>
+            <th> Name</th>
+            <th>Email</th>
+            <th>Profile photo</th>
+            <th>Birth Date</th>
+            <th>Resume</th>
+            <th>Phone</th>
+            <th>Action</th>
+
+
+        </tr>
+        </thead>    
+        
+        <tbody>
+            {% for i in employee %}
+            <tr style="background-color:#D6DBDF">
+                <td>{{forloop.counter}}</td>
+                <td>{{i.first_name}} {{i.last_name}}</td>
+                <td>{{i.email}}</td>
+                <td><img src="{{i.profile_img}}"></td>
+                <td>{{i.DOB}}</td>
+                <td><a href="{{ i.resume}}" class="btn btn-outline-success mr-3">Download</a></td>
+                <td>{{i.phone}}</td>
+                <td><a class="btn btn-warning btn-sm" href="{% url 'delete_employee' i.id %}" onclick="return confirm('Are you sure?')">Delete</a></td>
+
+            </tr>
+            {%endfor%} 
+    </table>
+</div>
+
+{% endif %}
+{%endblock%}

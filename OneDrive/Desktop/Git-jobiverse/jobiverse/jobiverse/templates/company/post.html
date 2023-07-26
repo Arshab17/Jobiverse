@@ -1,0 +1,42 @@
+{% extends 'company/base.html' %}
+
+{% block content %}
+{% for message in messages %}
+
+<span style="color:green"> {{message}}. </span><br>
+
+{%endfor%}<br>
+<div class="container">
+    <table id="example" class="table table-hover  ">
+    <thead>
+        <tr style=" background-color:black"  class="text-light">
+            <th>S.no.</th>
+            <th>Company name</th>
+            <th>Desgnation</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Date </th>
+            <th>Action</th>
+            
+
+        </tr>
+        </thead>    
+        
+        <tbody>
+            {% for i in jobs %}
+            <tr style="background-color:#D6DBDF">
+                <td>{{forloop.counter}}</td>
+                <td>{{i.company}}</td>
+                <td>{{i.designation}}</td>
+                <td>{{i.description}}</td>
+                <td>{{i.location}}</td>
+                <td>{{i.posted}}</td>
+                <td><a class=" btn-warning btn-sm" href="{% url 'edit_job_post' i.id %}" onclick="return confirm('Are you sure?')">Edit</a></td>
+
+            </tr>
+            {%endfor%} 
+    </table>
+    {% include 'admin/footer.html' %}
+</div>
+
+{% endblock %}
